@@ -18,12 +18,13 @@ from farelens.api.middleware import (
     RequestIdMiddleware,
     SecurityHeadersMiddleware,
 )
-from farelens.api.routes import admin, fare_rules, health
+from farelens.api.routes import admin, amenities, fare_rules, health
 from farelens.core.config import Settings, get_settings
 from farelens.core.errors import register_exception_handlers
 from farelens.core.logging import configure_logging
 from farelens.core.security import SecretBox, load_or_create_secret
 from farelens.db.datastores import DataStores
+from farelens.services.amenities import AmenitiesService
 from farelens.services.api_keys import ApiKeyService
 from farelens.services.chat import ChatService
 from farelens.services.conversations import ConversationStore
@@ -37,9 +38,9 @@ from farelens.services.users import UserService
 logger = logging.getLogger(__name__)
 
 API_DESCRIPTION = """
-**FareLens** turns raw airline fare rules into traveller-friendly summaries and answers
-questions about them, using the LLM provider you configure (OpenAI, Azure OpenAI, Anthropic,
-Google Gemini, Groq or AWS Bedrock).
+**FareLens** turns raw airline fare rules into traveller-friendly summaries, answers
+questions about them, and cleans up fare-family amenity lists and fare-family names, using the
+LLM provider you configure (OpenAI, Azure OpenAI, Anthropic, Google Gemini, Groq or AWS Bedrock).
 
 Authenticate public endpoints with an API key created in the admin UI:
 
@@ -67,6 +68,7 @@ async def build_services(settings: Settings) -> Services:
         datastores, ttl_seconds=settings.conversation_ttl_seconds, max_items=settings.max_cached_conversations
     )
     chat = ChatService(settings, conversations, prompts, llm_config, usage)
+    amenities_service = AmenitiesService(settings, datastores, prompts, llm_config, usage)
     api_keys = ApiKeyService(datastores)
     users = UserService(datastores)
 
@@ -84,6 +86,7 @@ async def build_services(settings: Settings) -> Services:
         summary=summary,
         conversations=conversations,
         chat=chat,
+        amenities=amenities_service,
         api_keys=api_keys,
         users=users,
     )
@@ -137,6 +140,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     app.include_router(health.router)
     app.include_router(fare_rules.router, prefix="/api/v1")
+    app.include_router(amenities.router, prefix="/api/v1")
     app.include_router(admin.router, prefix="/api")
 
     ui_dir = settings.ui_path

@@ -163,6 +163,7 @@ class UsageService:
                    COUNT(u.id)                                              AS requests,
                    COUNT(u.id) FILTER (WHERE u.feature = 'summary')         AS summary_requests,
                    COUNT(u.id) FILTER (WHERE u.feature = 'chat')            AS chat_requests,
+                   COUNT(u.id) FILTER (WHERE u.feature IN ('amenities','fare_names')) AS amenities_requests,
                    COUNT(u.id) FILTER (WHERE u.status <> 'ok')              AS errors,
                    COUNT(u.id) FILTER (WHERE u.cache_status IN ('redis-hit','postgres-hit')) AS cache_hits,
                    COALESCE(SUM(u.prompt_tokens), 0)                        AS prompt_tokens,

@@ -2,6 +2,12 @@
 
 All notable changes to FareLens are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- **Amenities API**: `POST /api/v1/amenities/summary` de-duplicates, classifies, shortens and translates fare-family benefit texts (per-item, per-language Redis → Postgres cache; literal `summarize=false` mode) and `POST /api/v1/amenities/fare-names` turns fare-family codes into friendly labels.
+- Playground tabs for amenities and fare names, prompt editor entries for the new prompts, amenities series in usage charts, amenities cache maintenance.
+
 ## [1.0.0] - 2026-09-22
 
 Initial open-source release.

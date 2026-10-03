@@ -13,6 +13,7 @@ from farelens.llm.base import LLMProviderError
 from farelens.services.prompts import PROMPTS, PromptService, validate_prompt
 
 if TYPE_CHECKING:  # avoid import cycles
+    from farelens.services.amenities import AmenitiesService
     from farelens.services.chat import ChatService
     from farelens.services.llm_config import LLMConfigService
     from farelens.services.summary import SummaryService
@@ -30,6 +31,16 @@ SAMPLE_SEGMENTS = [
     {"source_airport": "DXB", "destination_airport": "DEL", "departure_date": "2026-11-12", "fare_rules_text": SAMPLE_RULES.replace("SAR 150", "SAR 300")},
 ]
 SAMPLE_QUESTION = "What does it cost to cancel each flight before departure?"
+SAMPLE_AMENITIES = [
+    "1pc x 7kg",
+    "1 piece cabin bag, max weight 7kg, max dimensions 56x45x25cm or 22x18x10in",
+    "Checked baggage: 1 piece up to 23 kg",
+    "Short lounge access conditions.: Not included",
+    "Seat selection available for a fee. See https://airline.example/seats",
+    "Earn 50% award miles",
+    "Changes permitted with fee; no refund",
+]
+SAMPLE_FARE_CODES = ["ECOLITE", "ECOSMART", "ECOFLEX", "BUSIFLEX", "PREMSAVR", "ECOXQ7"]
 
 
 class PromptOverrideService:
@@ -126,6 +137,7 @@ class PromptOverrideService:
         timeout_seconds: float,
         lang: str = "en",
         is_mobile_view: bool = False,
+        amenities: AmenitiesService | None = None,
     ) -> dict[str, Any]:
         spec = PROMPTS.get(prompt_id)
         if spec is None:
@@ -136,10 +148,19 @@ class PromptOverrideService:
         temp = {spec.file: content}
         if spec.feature == "summary":
             messages = summary.build_messages(SAMPLE_RULES, lang=lang, is_mobile_view=is_mobile_view, temp_overrides=temp)
-        else:
+        elif spec.feature == "chat":
             messages = chat.build_messages(
                 SAMPLE_SEGMENTS, user_message=SAMPLE_QUESTION, history=[], lang=lang, is_mobile_view=is_mobile_view, temp_overrides=temp
             )
+        elif spec.feature == "amenities":
+            if amenities is None:
+                raise AppError("Amenities service unavailable.", status_code=503)
+            keyed = {f"k{i + 1}": t for i, t in enumerate(SAMPLE_AMENITIES)}
+            messages = amenities.build_messages(keyed, lang=lang, summarize="translate" not in spec.id, temp_overrides=temp)
+        else:
+            if amenities is None:
+                raise AppError("Amenities service unavailable.", status_code=503)
+            messages = amenities.build_fare_name_messages(SAMPLE_FARE_CODES, lang=lang, temp_overrides=temp)
         provider, cfg = await llm_config.get_provider()
         started = time.perf_counter()
         try:

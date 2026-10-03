@@ -10,6 +10,7 @@ from farelens.core.config import Settings
 from farelens.core.errors import AppError, get_request_id
 from farelens.core.security import SecretBox, decode_session_token
 from farelens.db.datastores import DataStores
+from farelens.services.amenities import AmenitiesService
 from farelens.services.api_keys import ApiKeyService
 from farelens.services.chat import ChatService
 from farelens.services.conversations import ConversationStore
@@ -37,6 +38,7 @@ class Services:
     summary: SummaryService
     conversations: ConversationStore
     chat: ChatService
+    amenities: AmenitiesService
     api_keys: ApiKeyService
     users: UserService
 

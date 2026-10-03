@@ -245,6 +245,11 @@ async def clear_summary_cache(services: Services = Depends(get_services), _: Use
     return await services.summary.clear_cache()
 
 
+@router.post("/cache/amenities/clear")
+async def clear_amenities_cache(services: Services = Depends(get_services), _: User = Depends(require_admin)) -> dict:
+    return await services.amenities.clear_cache()
+
+
 # ----------------------------------------------------------------- prompts
 @router.get("/prompts")
 async def prompts_list(services: Services = Depends(get_services), _: User = Depends(require_admin)) -> dict:
@@ -257,6 +262,8 @@ async def prompts_save(prompt_id: str, payload: PromptSaveRequest, user: User = 
     cleared = None
     if payload.clear_summary_cache and result["feature"] == "summary":
         cleared = await services.summary.clear_cache()
+    elif payload.clear_summary_cache and result["feature"] in ("amenities", "fare_names"):
+        cleared = await services.amenities.clear_cache()
     return {"prompt": result, "cache_cleared": cleared}
 
 
@@ -270,4 +277,5 @@ async def prompts_preview(prompt_id: str, payload: PromptPreviewRequest, _: User
     return await services.prompt_overrides.preview(
         prompt_id, payload.content, summary=services.summary, chat=services.chat, llm_config=services.llm_config,
         timeout_seconds=services.settings.llm_timeout_seconds, lang=payload.lang, is_mobile_view=payload.is_mobile_view,
+        amenities=services.amenities,
     )

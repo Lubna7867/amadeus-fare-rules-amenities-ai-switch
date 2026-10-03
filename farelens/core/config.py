@@ -59,6 +59,10 @@ class Settings(BaseSettings):
     conversation_ttl_seconds: int = Field(default=3600, alias="CONVERSATION_TTL_SECONDS")
     max_cached_conversations: int = Field(default=10000, alias="MAX_CACHED_CONVERSATIONS")
     llm_timeout_seconds: int = Field(default=90, alias="LLM_TIMEOUT_SECONDS")
+    max_amenities_per_request: int = Field(default=200, alias="MAX_AMENITIES_PER_REQUEST")
+    max_amenity_text_chars: int = Field(default=2000, alias="MAX_AMENITY_TEXT_CHARS")
+    amenity_batch_size: int = Field(default=40, alias="AMENITY_BATCH_SIZE")
+    amenity_cache_namespace: str = Field(default="v1", alias="AMENITY_CACHE_NAMESPACE")
     rate_limit_requests: int = Field(default=120, alias="RATE_LIMIT_REQUESTS")
     rate_limit_window_seconds: int = Field(default=60, alias="RATE_LIMIT_WINDOW_SECONDS")
 

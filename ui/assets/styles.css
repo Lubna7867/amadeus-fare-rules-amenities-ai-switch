@@ -23,6 +23,7 @@
   --chart-1: #6928d9;
   --chart-2: #b1a9ff;
   --chart-3: #c9c4d6;
+  --chart-4: #f0a04b;
   --radius: 14px;
   --radius-lg: 20px;
   --shadow: 0 1px 2px rgba(68, 38, 144, 0.06), 0 10px 30px -14px rgba(68, 38, 144, 0.18);
@@ -54,6 +55,7 @@
     --chart-1: #9b7bff;
     --chart-2: #5a48b0;
     --chart-3: #4a4462;
+    --chart-4: #f0b04a;
     --shadow: none;
   }
 }
@@ -441,3 +443,11 @@ details.advanced summary { cursor: pointer; color: var(--primary); font-size: 13
 .ph-req { border-color: var(--primary); color: var(--primary); }
 .prompt-text { min-height: 420px; font-size: 13px; }
 @media (max-width: 960px) { .prompts-layout { grid-template-columns: 1fr; } }
+
+/* ---------- Amenities ---------- */
+.amenity-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+.amenity-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.amenity-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.amenity-type { font-size: 12px; font-weight: 700; color: var(--primary); letter-spacing: .03em; }
+.amenity-desc { font-weight: 600; line-height: 1.35; }
+.amenity-details { line-height: 1.4; }

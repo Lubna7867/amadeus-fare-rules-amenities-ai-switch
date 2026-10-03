@@ -27,7 +27,7 @@ Airline fare rules are long, uppercase, telegraphic and full of ATPCO jargon (`N
 
 If you consume airline content through a GDS (we run on **Amadeus**), you will have hit this in NDC flows:
 
-- **Fare-family, price-class and fare-rule text is passed through exactly as the airline supplies it.** The GDS does not generate a short version the way it does for EDIFACT.
+- **Fare-family, price-class, amenity and fare-rule text is passed through exactly as the airline supplies it.** The GDS does not generate a short version the way it does for EDIFACT.
 - **There is no parameter to control the length**, and no standardisation across carriers.
 - **The text is often long and inconsistent**, with detailed conditions or URLs embedded, which makes it unusable in a B2C booking flow.
 - **This is by design.** When raised with the GDS, the position is that the behaviour is compliant with the NDC standard, so the integrator has to solve it.
@@ -42,6 +42,7 @@ It is content-source agnostic: Amadeus, Sabre, Travelport, direct-connect NDC or
 |---|---|
 | **Summary API** | `POST /api/v1/fare-rules/summary` → Markdown "mini rules" (table on desktop, compact sections on mobile). |
 | **Chat API** | `POST /api/v1/fare-rules/chat/stream` → Server-Sent Events Q&A over one or many itinerary segments, segment- and date-aware. |
+| **Amenities API** | `POST /api/v1/amenities/summary` → raw fare-family benefit texts in, de-duplicated, classified, translated items out. `POST /api/v1/amenities/fare-names` → `ECOLITE` becomes "Economy Lite". |
 | **Bring your own model** | OpenAI · Azure AI (Azure OpenAI) · Anthropic Claude · Google Gemini · Groq · AWS Bedrock — pick one in the UI, test it, switch any time. |
 | **Multilingual** | Arabic, Urdu, French, German, Hindi, Chinese… response language is a request parameter. |
 | **Caching** | Content-digest cache: Redis → Postgres → model. |
@@ -166,6 +167,40 @@ Segments are kept for `CONVERSATION_TTL_SECONDS` (1 h). An expired `convo_id` re
 
 Also: `POST /api/v1/fare-rules/chat` (single JSON response) · `DELETE /api/v1/fare-rules/chat/{convo_id}` · `GET /health` · `GET /health/ready`.
 
+### `POST /api/v1/amenities/summary`
+
+<p align="center"><img src="docs/screenshots/12-amenities.png" alt="Playground - amenities" width="900" /></p>
+
+The other half of the fare-family payload: the benefit list (baggage, seat, lounge, meal, miles...). Airlines send it as repetitive, unstandardised text; this endpoint returns a short, de-duplicated, classified list in the traveller's language. The body can be a bare JSON array of strings or an object:
+
+```json
+{"amenities": ["1pc x 7kg", "1 piece cabin bag, max 7kg, 56x45x25cm", "Lounge access not included", "Seat selection for a fee. See https://airline.example/seats"], "lang": "en", "summarize": true}
+```
+
+```json
+{
+  "amenities": [
+    {"type": "CabinBaggage", "description": "1 cabin bag up to 7 kg", "details": "max 56x45x25 cm", "is_chargeable": false, "included": true, "ref_url": ""},
+    {"type": "Lounge", "description": "Lounge access not included", "details": "", "is_chargeable": false, "included": false, "ref_url": ""},
+    {"type": "Seat", "description": "Seat selection for a fee", "details": "", "is_chargeable": true, "included": false, "ref_url": "https://airline.example/seats"}
+  ],
+  "cache": "mixed", "lang": "en", "summarize": true, "provider": "groq", "model": "openai/gpt-oss-120b", "latency_ms": 1420
+}
+```
+
+- `summarize: true` (default) merges same-meaning items, classifies them (`Baggage`, `CabinBaggage`, `Seat`, `Meal`, `Lounge`, `Priority`, `Wifi`, `Entertainment`, `Miles`, `Upgrade`, `Refund`, `Change`, `GroundServices`, `Insurance`, `Warning`, `Other`), shortens the text and moves limits/conditions into `details`.
+- `summarize: false` translates each item literally, one output per input, nothing merged.
+- Caching is **per item and language**: a batch of 20 where 18 were seen before sends only 2 to the model (`cache`: `redis-hit` | `postgres-hit` | `generated` | `mixed`).
+
+### `POST /api/v1/amenities/fare-names`
+
+```json
+{"names": ["ECOLITE", "BUSIFLEX", "PREMSAVR"], "lang": "en"}
+```
+```json
+{"names": {"ECOLITE": "Economy Lite", "BUSIFLEX": "Business Flex", "PREMSAVR": "Premium Economy Saver"}, "cache": "generated", "lang": "en", "provider": "groq", "model": "openai/gpt-oss-120b", "latency_ms": 640}
+```
+
 ---
 
 ## Configuration
@@ -179,6 +214,8 @@ Works with zero configuration. Copy `.env.example` to `.env` to change anything.
 | `DATABASE_URL` / `REDIS_URL` | bundled containers | Default datastores. |
 | `ADMIN_DEFAULT_USERNAME` / `ADMIN_DEFAULT_PASSWORD` | `admin` / `admin` | Seeded once, on first start with an empty database. |
 | `MAX_FARE_RULES_CHARS` | `60000` | Max fare-rules length per request / segment. |
+| `MAX_AMENITIES_PER_REQUEST` / `AMENITY_BATCH_SIZE` | `200` / `40` | Amenity texts per request; uncached items sent to the model per call. |
+| `AMENITY_CACHE_NAMESPACE` | `v1` | Bump to invalidate cached amenity results. |
 | `SUMMARY_CACHE_NAMESPACE` | `v1` | Bump to invalidate all cached summaries (e.g. after editing prompts). |
 | `SUMMARY_CACHE_TTL_SECONDS` | `2592000` | Redis TTL for summaries; Postgres keeps them indefinitely. |
 | `CONVERSATION_TTL_SECONDS` | `3600` | Retention of chat segments per `convo_id`. |
@@ -209,7 +246,7 @@ Credentials are Fernet-encrypted with `APP_SECRET_KEY`. The public API never see
 
 <p align="center"><img src="docs/screenshots/09-prompts.png" alt="Prompt editor" width="900" /></p>
 
-Edit them from the admin UI (**Prompts** page: placeholder validation, live preview against sample fare rules, reset to default) or on disk in `prompts/fare_rules/*.md`. UI edits are stored in Postgres and take precedence; the files are the defaults. `summary_system.md` and `chat_system.md` carry the domain rules (ATPCO vocabulary, before/after-departure and no-show logic, strict no-hallucination policy); `*_layout_*.md` control desktop vs mobile formatting. After changing a prompt, bump `SUMMARY_CACHE_NAMESPACE` or clear the cache from the UI.
+All prompts, including the amenities and fare-name ones, can be edited from the admin UI (**Prompts** page: placeholder validation, live preview against sample fare rules, reset to default) or on disk in `prompts/fare_rules/*.md`. UI edits are stored in Postgres and take precedence; the files are the defaults. `summary_system.md` and `chat_system.md` carry the domain rules (ATPCO vocabulary, before/after-departure and no-show logic, strict no-hallucination policy); `*_layout_*.md` control desktop vs mobile formatting. After changing a prompt, bump `SUMMARY_CACHE_NAMESPACE` or clear the cache from the UI.
 
 ---
 
