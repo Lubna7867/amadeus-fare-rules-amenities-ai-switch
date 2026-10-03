@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FareLens – Open-source airline fare rules summariser &amp; chat API (Amadeus NDC, GDS)</title>
-  <meta name="description" content="FareLens is a free, open-source, self-hosted API and admin UI that turns raw airline fare rules (Amadeus NDC, GDS, EDIFACT, airline APIs) into traveller-friendly summaries and answers cancellation, change and no-show questions using your own LLM: OpenAI, Azure OpenAI, Anthropic Claude, Google Gemini, Groq or AWS Bedrock. One docker compose up." />
+  <title>FareLens – Open-source airline fare rules &amp; amenities summariser and chat API (Amadeus NDC, GDS)</title>
+  <meta name="description" content="FareLens is a free, open-source, self-hosted API and admin UI that turns raw airline fare rules and fare-family amenities (Amadeus NDC, GDS, EDIFACT, airline APIs) into traveller-friendly summaries, answers cancellation, change and no-show questions, and converts fare-family codes to friendly names using your own LLM: OpenAI, Azure OpenAI, Anthropic Claude, Google Gemini, Groq or AWS Bedrock. One docker compose up." />
   <meta name="keywords" content="airline fare rules, fare rules API, fare rules summary, fare rules chat, NDC fare family description, Amadeus NDC, GDS, EDIFACT, ATPCO, cancellation penalty, change fee, no-show, refund rules, OTA, travel tech, travel technology, open source, self-hosted, LLM, FastAPI, OpenAI, Azure OpenAI, Anthropic Claude, Google Gemini, Groq, AWS Bedrock, docker compose, TravelSwitch" />
   <meta name="author" content="TravelSwitch" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -12,8 +12,8 @@
   <meta name="theme-color" content="#6928d9" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="FareLens" />
-  <meta property="og:title" content="FareLens – Airline fare rules, explained. Open-source fare-rules summariser &amp; chat API" />
-  <meta property="og:description" content="Turn raw airline fare rules from Amadeus NDC or any GDS into clear, multilingual summaries and Q&amp;A with your own LLM. Self-hosted, MIT licensed, one command to run." />
+  <meta property="og:title" content="FareLens – Airline fare rules and amenities, explained. Open-source summariser &amp; chat API" />
+  <meta property="og:description" content="Turn raw airline fare rules and fare-family amenities from Amadeus NDC or any GDS into clear, multilingual summaries, Q&amp;A and friendly fare names with your own LLM. Self-hosted, MIT licensed, one command to run." />
   <meta property="og:url" content="https://travelswitch.github.io/farelens/" />
   <meta property="og:image" content="https://raw.githubusercontent.com/travelswitch/farelens/main/docs/screenshots/05-playground-summary.png" />
   <meta property="og:image:width" content="1600" />
@@ -21,7 +21,7 @@
   <meta property="og:image:alt" content="FareLens playground showing a fare-rules summary table" />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="FareLens – Open-source airline fare rules summariser &amp; chat API" />
+  <meta name="twitter:title" content="FareLens – Open-source airline fare rules &amp; amenities summariser and chat API" />
   <meta name="twitter:description" content="Clear, multilingual fare-rule summaries and Q&amp;A from raw Amadeus NDC / GDS text, using OpenAI, Claude, Gemini, Groq, Azure or Bedrock. Self-hosted, MIT." />
   <meta name="twitter:image" content="https://raw.githubusercontent.com/travelswitch/farelens/main/docs/screenshots/05-playground-summary.png" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236d4dff'/%3E%3Cstop offset='1' stop-color='%23442690'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='15' fill='url(%23g)'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23fff' stroke-width='3' stroke-dasharray='33 11' transform='rotate(-35 16 16)'/%3E%3Ccircle cx='23' cy='9' r='2.5' fill='%23fff'/%3E%3C/svg%3E" />
@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"FareLens","applicationCategory":"DeveloperApplication","applicationSubCategory":"Travel technology / airline fare rules API","operatingSystem":"Docker, Linux, Windows, macOS","softwareVersion":"1.0.0","license":"https://opensource.org/licenses/MIT","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://travelswitch.github.io/farelens/","downloadUrl":"https://github.com/travelswitch/farelens","codeRepository":"https://github.com/travelswitch/farelens","programmingLanguage":"Python","description":"Open-source, self-hosted API and admin UI that turns raw airline fare rules (Amadeus NDC, GDS, airline APIs) into traveller-friendly summaries and answers cancellation, change and no-show questions using the operator's own LLM (OpenAI, Azure OpenAI, Anthropic Claude, Google Gemini, Groq, AWS Bedrock).","keywords":"airline fare rules, NDC, Amadeus, GDS, fare rules API, LLM, travel tech, open source","author":{"@type":"Organization","name":"TravelSwitch","url":"https://travelswitch.com"},"publisher":{"@type":"Organization","name":"TravelSwitch","url":"https://travelswitch.com"},"screenshot":"https://raw.githubusercontent.com/travelswitch/farelens/main/docs/screenshots/05-playground-summary.png"}
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"FareLens","applicationCategory":"DeveloperApplication","applicationSubCategory":"Travel technology / airline fare rules API","operatingSystem":"Docker, Linux, Windows, macOS","softwareVersion":"1.0.0","license":"https://opensource.org/licenses/MIT","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://travelswitch.github.io/farelens/","downloadUrl":"https://github.com/travelswitch/farelens","codeRepository":"https://github.com/travelswitch/farelens","programmingLanguage":"Python","description":"Open-source, self-hosted API and admin UI that turns raw airline fare rules and fare-family amenities (Amadeus NDC, GDS, airline APIs) into traveller-friendly summaries, answers cancellation, change and no-show questions, and converts fare-family codes to friendly names using the operator's own LLM (OpenAI, Azure OpenAI, Anthropic Claude, Google Gemini, Groq, AWS Bedrock).","keywords":"airline fare rules, NDC, Amadeus, GDS, fare rules API, LLM, travel tech, open source","author":{"@type":"Organization","name":"TravelSwitch","url":"https://travelswitch.com"},"publisher":{"@type":"Organization","name":"TravelSwitch","url":"https://travelswitch.com"},"screenshot":"https://raw.githubusercontent.com/travelswitch/farelens/main/docs/screenshots/05-playground-summary.png"}
   </script>
   <style>
     :root{--bg:#fbfaff;--surface:#fff;--surface-2:#f6f4ff;--border:#e8e3f5;--text:#1f1a2e;--muted:#6b6482;--primary:#6928d9;--accent:#6d4dff;--secondary:#442690;--ink:#17122b;--radius:20px}
@@ -106,8 +106,8 @@
 
   <section class="hero"><div class="wrap">
     <span class="badge"><i></i>Open source · MIT · v1.0</span>
-    <h1>Airline fare rules,<br/><span>explained.</span></h1>
-    <p class="lead">FareLens is a self-hosted API and admin UI that turns raw airline fare rules from Amadeus NDC, any GDS or airline API into clear, multilingual summaries and answers the questions travellers actually ask, using the LLM provider you choose.</p>
+    <h1>Airline fare rules<br/>and amenities, <span>explained.</span></h1>
+    <p class="lead">FareLens is a self-hosted API and admin UI that turns raw airline fare rules and fare-family benefit lists from Amadeus NDC, any GDS or airline API into clear, multilingual summaries, answers the questions travellers actually ask, and turns codes like ECOLITE into "Economy Lite", using the LLM provider you choose.</p>
     <div class="cta">
       <a class="btn btn-primary" href="https://github.com/travelswitch/farelens">View on GitHub</a>
       <a class="btn btn-ghost" href="https://github.com/travelswitch/farelens#quick-start">Quick start</a>
@@ -133,8 +133,8 @@
 
   <section id="problem"><div class="wrap">
     <p class="eyebrow">The problem</p>
-    <h2>Airlines send fare rules. Travellers can't read them.</h2>
-    <p class="sub">In NDC flows the GDS passes fare-family, price-class and fare-rule text through exactly as the airline supplies it. No short version, no length control, no standardisation across carriers. That's by design, so the integrator has to solve it.</p>
+    <h2>Airlines send fare rules and benefit lists. Travellers can't read them.</h2>
+    <p class="sub">In NDC flows the GDS passes fare-family names, amenity lists and fare-rule text through exactly as the airline supplies it. No short version, no length control, no standardisation across carriers. That's by design, so the integrator has to solve it.</p>
     <div class="split">
       <div class="panel"><h3>What the GDS returns <span class="tag tag-bad">raw</span></h3>
         <div class="raw">CANCELLATIONS BEFORE DEPARTURE CHARGE SAR 150 FOR CANCEL/REFUND. CHILD/INFANT DISCOUNTS APPLY. WAIVED FOR DEATH OF PASSENGER OR FAMILY MEMBER. AFTER DEPARTURE TICKET IS NON-REFUNDABLE. REFUND OF UNUSED TAXES PERMITTED. NO-SHOW TICKET IS NON-REFUNDABLE. CHANGES BEFORE DEPARTURE CHARGE SAR 100 FOR REISSUE/REVALIDATION. FARE DIFFERENCE APPLIES. CHANGES PERMITTED UP TO 4 HOURS BEFORE DEPARTURE. AFTER DEPARTURE CHARGE SAR 200 FOR REISSUE. FARE DIFFERENCE APPLIES. NO-SHOW CHARGE SAR 250 FOR REISSUE. FARE DIFFERENCE APPLIES. TICKET VALID FOR 1 YEAR FROM DATE OF ISSUE. SEE ALSO HTTPS://AIRLINE.EXAMPLE/CONDITIONS ...</div></div>
@@ -152,8 +152,8 @@
 
   <section id="how"><div class="wrap">
     <p class="eyebrow">How it works</p>
-    <h2>Three calls from raw text to a happy traveller.</h2>
-    <p class="sub">And one more for the benefit list: <code>/api/v1/amenities/summary</code> turns baggage, seat, lounge and meal texts into clean, classified items.</p>
+    <h2>Four calls from raw text to a happy traveller.</h2>
+    <p class="sub">Summary, chat, amenities and fare names. Each one takes whatever the airline sent and returns something a person can read.</p>
     <div class="steps">
       <div class="step"><div class="n">1</div><h3>Send the rules</h3><p>POST whatever the airline returned (HTML, uppercase, telegraphic ATPCO text) to <code>/api/v1/fare-rules/summary</code> with a language and layout.</p></div>
       <div class="step"><div class="n">2</div><h3>Get a summary</h3><p>Markdown mini rules: a table on desktop, compact sections on mobile. Cached by content digest, so identical rules never hit the model twice.</p></div>
@@ -199,7 +199,7 @@
 
   <section><div class="wrap">
     <p class="eyebrow">Built for</p>
-    <h2>Anyone who has to show fare rules to a human.</h2>
+    <h2>Anyone who has to show fare rules or fare families to a human.</h2>
     <div class="aud"><span>Online travel agencies</span><span>Airlines</span><span>Travel management companies</span><span>Booking-engine vendors</span><span>Metasearch</span><span>Amadeus · Sabre · Travelport integrators</span><span>Direct-connect NDC</span></div>
     <div class="banner">
       <h2>Ship readable fare rules this week.</h2>

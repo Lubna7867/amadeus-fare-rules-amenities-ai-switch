@@ -1,7 +1,7 @@
 <h1 align="center">FareLens</h1>
 
-<p align="center"><strong>Airline fare rules, explained.</strong> · <a href="https://travelswitch.github.io/farelens/">Website</a> · <a href="docs/FareLens.pdf">Guide (PDF)</a><br/>
-Self-hosted API + admin UI that turns raw airline fare-rules text into traveller-friendly summaries and answers questions about them — using the LLM provider <em>you</em> choose.</p>
+<p align="center"><strong>Airline fare rules and amenities, explained.</strong> · <a href="https://travelswitch.github.io/farelens/">Website</a> · <a href="docs/FareLens.pdf">Guide (PDF)</a><br/>
+Self-hosted API + admin UI that turns raw airline fare rules and fare-family amenity lists into traveller-friendly summaries, answers questions about them, and turns fare codes into friendly names — using the LLM provider <em>you</em> choose.</p>
 
 <p align="center">
   <a href="LICENSE"><img alt="MIT" src="https://img.shields.io/badge/license-MIT-6928d9.svg"></a>
