@@ -4,7 +4,7 @@ All notable changes to FareLens are documented here. The format follows [Keep a 
 
 ## [1.0.0] - 2026-10-03
 
-Initial open-source release.
+Initial open-source release, built for Amadeus NDC content.
 
 ### Added
 - **Amenities API**: `POST /api/v1/amenities/summary` de-duplicates, classifies, shortens and translates fare-family benefit texts (per-item, per-language Redis → Postgres cache; literal `summarize=false` mode) and `POST /api/v1/amenities/fare-names` turns fare-family codes into friendly labels.

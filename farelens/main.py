@@ -38,9 +38,9 @@ from farelens.services.users import UserService
 logger = logging.getLogger(__name__)
 
 API_DESCRIPTION = """
-**FareLens** turns raw airline fare rules into traveller-friendly summaries, answers
-questions about them, and cleans up fare-family amenity lists and fare-family names, using the
-LLM provider you configure (OpenAI, Azure OpenAI, Anthropic, Google Gemini, Groq or AWS Bedrock).
+**FareLens** turns the fare rules and fare-family amenities from Amadeus NDC responses into
+traveller-friendly summaries, classified amenity lists and friendly fare names, and answers
+questions about them, using the LLM provider you configure (OpenAI, Azure OpenAI, Anthropic, Google Gemini, Groq or AWS Bedrock).
 
 Authenticate public endpoints with an API key created in the admin UI:
 

@@ -1,6 +1,6 @@
 """Normalisation of raw fare-rules text and stable cache keys.
 
-Fare rules arrive from GDS/NDC feeds as HTML-ish, inconsistently cased and
+Fare rules arrive from Amadeus NDC responses as HTML-ish, inconsistently cased and
 whitespace-heavy blobs. Two different normalisations are used:
 
 * `for_prompt`  - readable text for the model (keeps line structure).

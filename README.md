@@ -1,7 +1,7 @@
 <h1 align="center">FareLens</h1>
 
-<p align="center"><strong>Airline fare rules and amenities, explained.</strong> · <a href="https://travelswitch.github.io/farelens/">Website</a> · <a href="docs/FareLens.pdf">Guide (PDF)</a><br/>
-Self-hosted API + admin UI that turns raw airline fare rules and fare-family amenity lists into traveller-friendly summaries, answers questions about them, and turns fare codes into friendly names — using the LLM provider <em>you</em> choose.</p>
+<p align="center"><strong>Amadeus NDC fare rules and amenities, explained.</strong> · <a href="https://travelswitch.github.io/farelens/">Website</a> · <a href="docs/FareLens.pdf">Guide (PDF)</a><br/>
+Self-hosted API + admin UI that turns the fare rules and fare-family amenity text from Amadeus NDC responses into traveller-friendly summaries, classified amenity cards and friendly fare names, and answers questions about them — using the LLM provider <em>you</em> choose.</p>
 
 <p align="center">
   <a href="LICENSE"><img alt="MIT" src="https://img.shields.io/badge/license-MIT-6928d9.svg"></a>
@@ -19,30 +19,28 @@ Self-hosted API + admin UI that turns raw airline fare rules and fare-family ame
 
 ## Why
 
-**FareLens** is an open-source **airline fare rules API** for OTAs, airlines, TMCs and travel-tech teams: it converts raw fare rules and fare-family descriptions from **Amadeus NDC**, Sabre, Travelport, EDIFACT or airline APIs into plain-language, multilingual summaries and a Q&A chat about cancellation, change, refund and no-show penalties, using your own LLM (OpenAI, Azure OpenAI, Anthropic Claude, Google Gemini, Groq, AWS Bedrock).
+**FareLens** is an open-source **fare rules and amenities API for Amadeus NDC**, built for OTAs, airlines, TMCs and travel-tech teams on Amadeus: it converts the raw fare rules, fare-family benefit lists and fare-family codes returned by Amadeus NDC into plain-language, multilingual summaries, classified amenity cards, friendly fare names and a Q&A chat about cancellation, change, refund and no-show penalties, using your own LLM (OpenAI, Azure OpenAI, Anthropic Claude, Google Gemini, Groq, AWS Bedrock).
 
 Airline fare rules are long, uppercase, telegraphic and full of ATPCO jargon (`NON-REF`, `RFND`, `CHG PEN`, `NOSHOW`…). Travellers just want to know *"what does it cost me to cancel or change?"*. FareLens answers that in plain language, in the traveller's language, on desktop or mobile — and caches the result so repeated fare rules cost zero tokens.
 
-### The problem this solves (GDS / NDC integrators)
+### The problem this solves (Amadeus NDC integrators)
 
-If you consume airline content through a GDS (we run on **Amadeus**), you will have hit this in NDC flows:
+If you consume airline content through Amadeus NDC, you will have hit this:
 
-- **Fare-family, price-class, amenity and fare-rule text is passed through exactly as the airline supplies it.** The GDS does not generate a short version the way it does for EDIFACT.
+- **Fare-family names, amenity lists and fare-rule text are passed through exactly as the airline supplies them.** There is no Amadeus-generated short version the way there is for EDIFACT content.
 - **There is no parameter to control the length**, and no standardisation across carriers.
-- **The text is often long and inconsistent**, with detailed conditions or URLs embedded, which makes it unusable in a B2C booking flow.
-- **This is by design.** When raised with the GDS, the position is that the behaviour is compliant with the NDC standard, so the integrator has to solve it.
+- **The text is often long and inconsistent**, with duplicated benefit lines, embedded conditions or URLs, which makes it unusable in a B2C booking flow.
+- **This is by design.** When raised with Amadeus, the position is that the behaviour is compliant with the NDC standard, so the integrator has to solve it.
 
-FareLens is that solution. Feed it whatever the airline returned and get back a consistent, short, structured summary, plus a Q&A channel for the follow-up questions travellers actually ask.
-
-It is content-source agnostic: Amadeus, Sabre, Travelport, direct-connect NDC or an airline API all produce the same clean output.
+FareLens is that solution for both halves of the fare-family payload. Feed it whatever Amadeus returned and get back a consistent, short, structured summary of the rules, a de-duplicated and classified amenity list, a friendly fare-family name, plus a Q&A channel for the follow-up questions travellers actually ask.
 
 ## What you get
 
 | | |
 |---|---|
 | **Summary API** | `POST /api/v1/fare-rules/summary` → Markdown "mini rules" (table on desktop, compact sections on mobile). |
+| **Amenities API** | `POST /api/v1/amenities/summary` → raw Amadeus NDC fare-family benefit texts in, de-duplicated, classified, translated items out. `POST /api/v1/amenities/fare-names` → `ECOLITE` becomes "Economy Lite". |
 | **Chat API** | `POST /api/v1/fare-rules/chat/stream` → Server-Sent Events Q&A over one or many itinerary segments, segment- and date-aware. |
-| **Amenities API** | `POST /api/v1/amenities/summary` → raw fare-family benefit texts in, de-duplicated, classified, translated items out. `POST /api/v1/amenities/fare-names` → `ECOLITE` becomes "Economy Lite". |
 | **Bring your own model** | OpenAI · Azure AI (Azure OpenAI) · Anthropic Claude · Google Gemini · Groq · AWS Bedrock — pick one in the UI, test it, switch any time. |
 | **Multilingual** | Arabic, Urdu, French, German, Hindi, Chinese… response language is a request parameter. |
 | **Caching** | Content-digest cache: Redis → Postgres → model. |
@@ -130,6 +128,41 @@ All public endpoints need `X-API-Key: fl_…` (or `Authorization: Bearer fl_…`
 
 `X-Cache` header: `redis-hit` | `postgres-hit` | `generated`.
 
+### `POST /api/v1/amenities/summary`
+
+<p align="center"><img src="docs/screenshots/12-amenities.png" alt="Playground - amenities" width="900" /></p>
+
+The other half of the Amadeus NDC fare-family payload: the benefit list (baggage, seat, lounge, meal, miles...). It arrives as repetitive, unstandardised text; this endpoint returns a short, de-duplicated, classified list in the traveller's language. The body can be a bare JSON array of strings or an object:
+
+```json
+{"amenities": ["1pc x 7kg", "1 piece cabin bag, max 7kg, 56x45x25cm", "Lounge access not included", "Seat selection for a fee. See https://airline.example/seats"], "lang": "en", "summarize": true}
+```
+
+```json
+{
+  "amenities": [
+    {"type": "CabinBaggage", "description": "1 cabin bag up to 7 kg", "details": "max 56x45x25 cm", "is_chargeable": false, "included": true, "ref_url": ""},
+    {"type": "Lounge", "description": "Lounge access not included", "details": "", "is_chargeable": false, "included": false, "ref_url": ""},
+    {"type": "Seat", "description": "Seat selection for a fee", "details": "", "is_chargeable": true, "included": false, "ref_url": "https://airline.example/seats"}
+  ],
+  "cache": "mixed", "lang": "en", "summarize": true, "provider": "groq", "model": "openai/gpt-oss-120b", "latency_ms": 1420
+}
+```
+
+- `summarize: true` (default) merges same-meaning items, classifies them (`Baggage`, `CabinBaggage`, `Seat`, `Meal`, `Lounge`, `Priority`, `Wifi`, `Entertainment`, `Miles`, `Upgrade`, `Refund`, `Change`, `GroundServices`, `Insurance`, `Warning`, `Other`), shortens the text and moves limits/conditions into `details`.
+- `summarize: false` translates each item literally, one output per input, nothing merged.
+- Caching is **per item and language**: a batch of 20 where 18 were seen before sends only 2 to the model (`cache`: `redis-hit` | `postgres-hit` | `generated` | `mixed`).
+
+### `POST /api/v1/amenities/fare-names`
+
+<p align="center"><img src="docs/screenshots/13-fare-names.png" alt="Playground - fare names" width="900" /></p>
+
+```json
+{"names": ["ECOLITE", "BUSIFLEX", "PREMSAVR"], "lang": "en"}
+```
+```json
+{"names": {"ECOLITE": "Economy Lite", "BUSIFLEX": "Business Flex", "PREMSAVR": "Premium Economy Saver"}, "cache": "generated", "lang": "en", "provider": "groq", "model": "openai/gpt-oss-120b", "latency_ms": 640}
+```
 ### `POST /api/v1/fare-rules/chat/stream`
 
 Start a conversation with the itinerary's segments; follow-ups only need `convo_id`, the new `user_message` and the client-side `history`.
@@ -167,41 +200,6 @@ Segments are kept for `CONVERSATION_TTL_SECONDS` (1 h). An expired `convo_id` re
 
 Also: `POST /api/v1/fare-rules/chat` (single JSON response) · `DELETE /api/v1/fare-rules/chat/{convo_id}` · `GET /health` · `GET /health/ready`.
 
-### `POST /api/v1/amenities/summary`
-
-<p align="center"><img src="docs/screenshots/12-amenities.png" alt="Playground - amenities" width="900" /></p>
-
-The other half of the fare-family payload: the benefit list (baggage, seat, lounge, meal, miles...). Airlines send it as repetitive, unstandardised text; this endpoint returns a short, de-duplicated, classified list in the traveller's language. The body can be a bare JSON array of strings or an object:
-
-```json
-{"amenities": ["1pc x 7kg", "1 piece cabin bag, max 7kg, 56x45x25cm", "Lounge access not included", "Seat selection for a fee. See https://airline.example/seats"], "lang": "en", "summarize": true}
-```
-
-```json
-{
-  "amenities": [
-    {"type": "CabinBaggage", "description": "1 cabin bag up to 7 kg", "details": "max 56x45x25 cm", "is_chargeable": false, "included": true, "ref_url": ""},
-    {"type": "Lounge", "description": "Lounge access not included", "details": "", "is_chargeable": false, "included": false, "ref_url": ""},
-    {"type": "Seat", "description": "Seat selection for a fee", "details": "", "is_chargeable": true, "included": false, "ref_url": "https://airline.example/seats"}
-  ],
-  "cache": "mixed", "lang": "en", "summarize": true, "provider": "groq", "model": "openai/gpt-oss-120b", "latency_ms": 1420
-}
-```
-
-- `summarize: true` (default) merges same-meaning items, classifies them (`Baggage`, `CabinBaggage`, `Seat`, `Meal`, `Lounge`, `Priority`, `Wifi`, `Entertainment`, `Miles`, `Upgrade`, `Refund`, `Change`, `GroundServices`, `Insurance`, `Warning`, `Other`), shortens the text and moves limits/conditions into `details`.
-- `summarize: false` translates each item literally, one output per input, nothing merged.
-- Caching is **per item and language**: a batch of 20 where 18 were seen before sends only 2 to the model (`cache`: `redis-hit` | `postgres-hit` | `generated` | `mixed`).
-
-### `POST /api/v1/amenities/fare-names`
-
-<p align="center"><img src="docs/screenshots/13-fare-names.png" alt="Playground - fare names" width="900" /></p>
-
-```json
-{"names": ["ECOLITE", "BUSIFLEX", "PREMSAVR"], "lang": "en"}
-```
-```json
-{"names": {"ECOLITE": "Economy Lite", "BUSIFLEX": "Business Flex", "PREMSAVR": "Premium Economy Saver"}, "cache": "generated", "lang": "en", "provider": "groq", "model": "openai/gpt-oss-120b", "latency_ms": 640}
-```
 
 ---
 

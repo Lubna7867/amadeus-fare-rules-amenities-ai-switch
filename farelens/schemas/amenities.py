@@ -35,7 +35,7 @@ class AmenitiesRequest(BaseModel):
         ...,
         min_length=1,
         max_length=200,
-        description="Raw amenity / benefit texts as supplied by the airline or GDS (one entry per line item).",
+        description="Raw amenity / benefit texts as supplied in the Amadeus NDC response (one entry per line item).",
     )
     lang: str = Field(default="en", min_length=2, max_length=5, description="Output language code.")
     summarize: bool = Field(
