@@ -298,6 +298,8 @@ Then change the admin password, restrict `CORS_ALLOW_ORIGINS`, and put the servi
 
 ## Development
 
+UI or website work? Start with **[docs/ui-guide.md](docs/ui-guide.md)** (clone, run, file map, conventions, how to submit changes).
+
 ```bash
 python -m venv .venv && . .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements-dev.txt
