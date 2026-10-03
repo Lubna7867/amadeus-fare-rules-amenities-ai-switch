@@ -194,6 +194,8 @@ The other half of the fare-family payload: the benefit list (baggage, seat, loun
 
 ### `POST /api/v1/amenities/fare-names`
 
+<p align="center"><img src="docs/screenshots/13-fare-names.png" alt="Playground - fare names" width="900" /></p>
+
 ```json
 {"names": ["ECOLITE", "BUSIFLEX", "PREMSAVR"], "lang": "en"}
 ```

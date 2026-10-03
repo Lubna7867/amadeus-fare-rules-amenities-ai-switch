@@ -2,17 +2,13 @@
 
 All notable changes to FareLens are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/) and the project uses [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
-
-### Added
-- **Amenities API**: `POST /api/v1/amenities/summary` de-duplicates, classifies, shortens and translates fare-family benefit texts (per-item, per-language Redis → Postgres cache; literal `summarize=false` mode) and `POST /api/v1/amenities/fare-names` turns fare-family codes into friendly labels.
-- Playground tabs for amenities and fare names, prompt editor entries for the new prompts, amenities series in usage charts, amenities cache maintenance.
-
-## [1.0.0] - 2026-09-22
+## [1.0.0] - 2026-10-03
 
 Initial open-source release.
 
 ### Added
+- **Amenities API**: `POST /api/v1/amenities/summary` de-duplicates, classifies, shortens and translates fare-family benefit texts (per-item, per-language Redis → Postgres cache; literal `summarize=false` mode) and `POST /api/v1/amenities/fare-names` turns fare-family codes into friendly labels.
+- Playground tabs for amenities and fare names, prompt editor entries for the new prompts, amenities series in usage charts, amenities cache maintenance.
 - Fare-rules **summary** endpoint with desktop (table) and mobile (compact sections) layouts, multilingual output and Redis → Postgres → LLM caching by content digest.
 - Fare-rules **chat** endpoint (Server-Sent Events and single-response variants) with segment-aware and date-aware reasoning over multi-segment itineraries.
 - Six LLM providers behind one interface: OpenAI, Azure AI (Azure OpenAI), Anthropic Claude, Google Gemini, Groq, AWS Bedrock — configurable and testable from the admin UI, credentials encrypted at rest.
