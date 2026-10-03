@@ -1,3 +1,3 @@
-"""Amadeus Fare Rules & Amenities AI Switch - open-source airline fare-rules summarizer and Q&A chat API."""
+"""Amadeus Fare Rules & Amenities AI Switch - open-source API for Amadeus NDC fare rules, amenities, fare names and Q&A chat."""
 
 __version__ = "1.0.0"

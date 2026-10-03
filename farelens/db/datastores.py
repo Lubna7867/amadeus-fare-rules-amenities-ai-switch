@@ -1,6 +1,6 @@
 """Runtime-switchable Postgres and Redis connections.
 
-FareLens ships with a bundled Postgres + Redis (docker compose). Operators can
+The app ships with a bundled Postgres + Redis (docker compose). Operators can
 point the app at their own instances from the admin UI. Because that choice
 must be known *before* we can read anything from a database, it is persisted
 as a small encrypted JSON file in APP_DATA_DIR (`datastores.json`).

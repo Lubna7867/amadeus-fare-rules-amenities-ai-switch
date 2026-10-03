@@ -53,7 +53,7 @@ Amadeus Fare Rules & Amenities AI Switch is that solution for both halves of the
 
 ```bash
 git clone https://github.com/travelswitch/amadeus-fare-rules-amenities-ai-switch.git
-cd farelens
+cd amadeus-fare-rules-amenities-ai-switch
 docker compose up -d
 ```
 
