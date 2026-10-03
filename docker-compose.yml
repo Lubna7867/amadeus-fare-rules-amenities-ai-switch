@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# FareLens - one-command stack: API + admin UI, Postgres, Redis.
+# Amadeus Fare Rules & Amenities AI Switch - one-command stack: API + admin UI, Postgres, Redis.
 #
 #   cp .env.example .env      # optional, defaults work out of the box
 #   docker compose up -d
@@ -12,7 +12,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: farelens/farelens:latest
+    image: travelswitch/amadeus-fare-rules-amenities-ai-switch:latest
     container_name: farelens-app
     restart: unless-stopped
     env_file:

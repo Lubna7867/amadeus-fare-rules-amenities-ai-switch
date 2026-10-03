@@ -1,11 +1,11 @@
-# Contributing to FareLens
+# Contributing to Amadeus Fare Rules & Amenities AI Switch
 
 Thanks for your interest! Issues and pull requests are welcome.
 
 ## Development setup
 
 ```bash
-git clone https://github.com/travelswitch/farelens.git && cd farelens
+git clone https://github.com/travelswitch/amadeus-fare-rules-amenities-ai-switch.git && cd farelens
 python -m venv .venv && . .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements-dev.txt
 docker compose up -d postgres redis

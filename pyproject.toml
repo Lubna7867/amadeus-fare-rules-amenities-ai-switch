@@ -1,12 +1,12 @@
 [project]
-name = "farelens"
+name = "amadeus-fare-rules-amenities-ai-switch"
 version = "1.0.0"
 description = "Open-source airline fare-rules summarizer and Q&A chat API, powered by the LLM provider of your choice."
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.11"
 authors = [{ name = "TravelSwitch" }]
-keywords = ["airline", "fare-rules", "travel", "llm", "fastapi", "summarization", "chat"]
+keywords = ["amadeus", "ndc", "airline", "fare-rules", "amenities", "travel", "llm", "fastapi"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Framework :: FastAPI",
@@ -42,8 +42,8 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/travelswitch/farelens"
-Issues = "https://github.com/travelswitch/farelens/issues"
+Homepage = "https://github.com/travelswitch/amadeus-fare-rules-amenities-ai-switch"
+Issues = "https://github.com/travelswitch/amadeus-fare-rules-amenities-ai-switch/issues"
 
 [build-system]
 requires = ["setuptools>=69", "wheel"]
