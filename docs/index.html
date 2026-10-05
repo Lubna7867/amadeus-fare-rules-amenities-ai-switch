@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Amadeus Fare Rules &amp; Amenities AI Switch – Amadeus NDC fare rules &amp; amenities, explained. Open-source summariser and chat API</title>
-  <meta name="description" content="Amadeus Fare Rules &amp; Amenities AI Switch is a free, open-source, self-hosted API and admin UI for Amadeus NDC integrators. It turns raw fare rules and fare-family amenity text from Amadeus NDC responses into traveller-friendly multilingual summaries, classified amenity lists, friendly fare-family names and a Q&amp;A chat, using your own LLM: OpenAI, Azure OpenAI, Anthropic Claude, Google Gemini, Groq or AWS Bedrock. One docker compose up." />
+  <title>Amadeus NDC Fare Rules &amp; Amenities AI Switch. Amadeus NDC fare rules &amp; amenities, explained. Open-source summariser and chat API</title>
+  <meta name="description" content="Amadeus NDC Fare Rules &amp; Amenities AI Switch is a free, open-source, self-hosted API and admin UI for Amadeus NDC integrators. It turns raw fare rules and fare-family amenity text from Amadeus NDC responses into traveller-friendly multilingual summaries, classified amenity lists, friendly fare-family names and a Q&amp;A chat, using your own LLM: OpenAI, Azure OpenAI, Anthropic Claude, Google Gemini, Groq or AWS Bedrock. One docker compose up." />
   <meta name="keywords" content="Amadeus NDC, Amadeus NDC fare rules, Amadeus NDC amenities, fare family description, fare rules API, fare rules summary, amenities parser, fare family name, fare rules chat, ATPCO, cancellation penalty, change fee, no-show, refund rules, OTA, travel tech, open source, self-hosted, LLM, FastAPI, OpenAI, Azure OpenAI, Anthropic Claude, Google Gemini, Groq, AWS Bedrock, docker compose, TravelSwitch" />
   <meta name="author" content="TravelSwitch" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href="https://travelswitch.github.io/amadeus-fare-rules-amenities-ai-switch/" />
   <meta name="theme-color" content="#6928d9" />
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Amadeus Fare Rules &amp; Amenities AI Switch" />
-  <meta property="og:title" content="Amadeus Fare Rules &amp; Amenities AI Switch – Amadeus NDC fare rules and amenities, explained" />
+  <meta property="og:site_name" content="Amadeus NDC Fare Rules &amp; Amenities AI Switch" />
+  <meta property="og:title" content="Amadeus NDC Fare Rules &amp; Amenities AI Switch. Amadeus NDC fare rules and amenities, explained" />
   <meta property="og:description" content="Turn raw Amadeus NDC fare rules and fare-family amenities into clear, multilingual summaries, amenity cards, friendly fare names and Q&amp;A with your own LLM. Self-hosted, MIT licensed, one command to run." />
   <meta property="og:url" content="https://travelswitch.github.io/amadeus-fare-rules-amenities-ai-switch/" />
   <meta property="og:image" content="https://raw.githubusercontent.com/travelswitch/amadeus-fare-rules-amenities-ai-switch/main/docs/screenshots/05-playground-summary.png" />
   <meta property="og:image:width" content="1600" />
   <meta property="og:image:height" content="1000" />
-  <meta property="og:image:alt" content="Amadeus Fare Rules &amp; Amenities AI Switch playground showing a fare-rules summary table" />
+  <meta property="og:image:alt" content="Amadeus NDC Fare Rules &amp; Amenities AI Switch playground showing a fare-rules summary table" />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Amadeus Fare Rules &amp; Amenities AI Switch – Amadeus NDC fare rules and amenities, explained" />
+  <meta name="twitter:title" content="Amadeus NDC Fare Rules &amp; Amenities AI Switch. Amadeus NDC fare rules and amenities, explained" />
   <meta name="twitter:description" content="Clear, multilingual fare-rule summaries, amenity cards, friendly fare names and Q&amp;A from raw Amadeus NDC text, using OpenAI, Claude, Gemini, Groq, Azure or Bedrock. Self-hosted, MIT." />
   <meta name="twitter:image" content="https://raw.githubusercontent.com/travelswitch/amadeus-fare-rules-amenities-ai-switch/main/docs/screenshots/05-playground-summary.png" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236d4dff'/%3E%3Cstop offset='1' stop-color='%23442690'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='15' fill='url(%23g)'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23fff' stroke-width='3' stroke-dasharray='33 11' transform='rotate(-35 16 16)'/%3E%3Ccircle cx='23' cy='9' r='2.5' fill='%23fff'/%3E%3C/svg%3E" />
@@ -53,7 +53,7 @@
     .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:700;font-size:16px;transition:transform .15s,box-shadow .15s}.btn:hover{text-decoration:none;transform:translateY(-1px)}
     .btn-primary{background:linear-gradient(135deg,var(--accent),var(--primary));color:#fff;box-shadow:0 14px 30px -14px rgba(105,40,217,.8)}
     .btn-ghost{border:1.5px solid var(--border);color:var(--text);background:#fff}
-    .term{margin:34px auto 0;max-width:680px;background:var(--ink);border-radius:16px;box-shadow:0 30px 60px -30px rgba(23,18,43,.6);text-align:left;overflow:hidden}
+    .term{margin:34px auto 0;max-width:710px;background:var(--ink);border-radius:16px;box-shadow:0 30px 60px -30px rgba(23,18,43,.6);text-align:left;overflow:hidden}
     .term-bar{display:flex;gap:6px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.08)}.term-bar i{width:11px;height:11px;border-radius:50%;background:#3b3550}.term-bar i:first-child{background:#ff5f57}.term-bar i:nth-child(2){background:#febc2e}.term-bar i:nth-child(3){background:#28c840}
     .term pre{margin:0;padding:18px 20px;color:#ece8f6;font:14px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow:auto}.term .c{color:#8b83a8}.term .p{color:#b1a9ff}
     .providers{padding:30px 0 10px;text-align:center}.providers p{color:var(--muted);font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 16px}
@@ -91,7 +91,7 @@
 </head>
 <body>
   <div class="nav"><div class="wrap">
-    <a class="brand" href="./" title="Amadeus Fare Rules &amp; Amenities AI Switch"><span class="mark" aria-hidden="true"></span>AI Switch</a>
+    <a class="brand" href="./" title="Amadeus NDC Fare Rules &amp; Amenities AI Switch"><span class="mark" aria-hidden="true"></span>AI Switch</a>
     <div class="links">
       <a href="#problem">Problem</a><a href="#how">How it works</a><a href="#features">Features</a>
       <a href="https://github.com/travelswitch/amadeus-fare-rules-amenities-ai-switch/blob/main/docs/deployment.md">Deploy</a>
@@ -101,9 +101,9 @@
   </div></div>
 
   <section class="hero"><div class="wrap">
-    <span class="badge"><i></i>Built for Amadeus NDC · Open source · MIT</span>
+    <span class="badge">Built for Amadeus NDC · Open source · MIT</span>
     <h1>Amadeus NDC fare rules<br/>and amenities, <span>explained.</span></h1>
-    <p class="lead">Amadeus Fare Rules &amp; Amenities AI Switch is a self-hosted API and admin UI that takes the fare rules and fare-family benefit text exactly as they arrive in Amadeus NDC responses and returns clear, multilingual summaries, classified amenity cards, friendly fare-family names and a chat that answers the questions travellers actually ask, using the LLM provider you choose.</p>
+    <p class="lead">Amadeus NDC Fare Rules &amp; Amenities AI Switch is a self-hosted API and admin UI that takes the fare rules and fare-family benefit text exactly as they arrive in Amadeus NDC responses and returns clear, multilingual summaries, classified amenity cards, friendly fare-family names and a chat that answers the questions travellers actually ask, using the LLM provider you choose.</p>
     <div class="cta">
       <a class="btn btn-primary" href="https://github.com/travelswitch/amadeus-fare-rules-amenities-ai-switch">View on GitHub</a>
       <a class="btn btn-ghost" href="https://github.com/travelswitch/amadeus-fare-rules-amenities-ai-switch#quick-start">Quick start</a>
@@ -126,18 +126,18 @@
   </div></div>
 
   <div class="wrap showcase">
-    <figure><img src="screenshots/05-playground-summary.png" alt="Amadeus Fare Rules &amp; Amenities AI Switch: raw Amadeus NDC fare rules on the left, a clean summary table with cancellation, change and no-show penalties on the right" loading="eager" /><figcaption>Fare rules: raw text in, summary table out</figcaption></figure>
-    <figure><img src="screenshots/12-amenities.png" alt="Amadeus Fare Rules &amp; Amenities AI Switch: raw fare-family amenity lines turned into classified amenity cards" loading="eager" /><figcaption>Amenities: duplicate lines merged into classified cards</figcaption></figure>
+    <figure><img src="screenshots/05-playground-summary.png" alt="Amadeus NDC Fare Rules &amp; Amenities AI Switch: raw Amadeus NDC fare rules on the left, a clean summary table with cancellation, change and no-show penalties on the right" loading="eager" /><figcaption>Fare rules: raw text in, summary table out</figcaption></figure>
+    <figure><img src="screenshots/12-amenities.png" alt="Amadeus NDC Fare Rules &amp; Amenities AI Switch: raw fare-family amenity lines turned into classified amenity cards" loading="eager" /><figcaption>Amenities: duplicate lines merged into classified cards</figcaption></figure>
   </div>
 
   <section id="problem"><div class="wrap">
-    <p class="eyebrow">The problem</p>
+    <p class="badge">The problem</p>
     <h2>Amadeus NDC passes fare rules and benefit lists through as-is. Travellers can't read them.</h2>
     <p class="sub">In Amadeus NDC flows the fare-family names, amenity lists and fare-rule text arrive exactly as the airline supplies them. There is no short version, no length control and no standardisation across carriers. That is by design and compliant with the NDC standard, so the integrator has to solve it.</p>
     <div class="split">
       <div class="panel"><h3>Fare rules as received <span class="tag tag-bad">raw</span></h3>
         <div class="raw">CANCELLATIONS BEFORE DEPARTURE CHARGE SAR 150 FOR CANCEL/REFUND. CHILD/INFANT DISCOUNTS APPLY. WAIVED FOR DEATH OF PASSENGER OR FAMILY MEMBER. AFTER DEPARTURE TICKET IS NON-REFUNDABLE. REFUND OF UNUSED TAXES PERMITTED. NO-SHOW TICKET IS NON-REFUNDABLE. CHANGES BEFORE DEPARTURE CHARGE SAR 100 FOR REISSUE/REVALIDATION. FARE DIFFERENCE APPLIES. CHANGES PERMITTED UP TO 4 HOURS BEFORE DEPARTURE. AFTER DEPARTURE CHARGE SAR 200 FOR REISSUE. FARE DIFFERENCE APPLIES. NO-SHOW CHARGE SAR 250 FOR REISSUE. FARE DIFFERENCE APPLIES. TICKET VALID FOR 1 YEAR FROM DATE OF ISSUE. SEE ALSO HTTPS://AIRLINE.EXAMPLE/CONDITIONS ...</div></div>
-      <div class="panel"><h3>Fare rules from Amadeus Fare Rules &amp; Amenities AI Switch <span class="tag tag-good">clean</span></h3>
+      <div class="panel"><h3>Fare rules from Amadeus NDC Fare Rules &amp; Amenities AI Switch <span class="tag tag-good">clean</span></h3>
         <table class="mini"><thead><tr><th>Section</th><th>Timing</th><th>Penalty</th><th>Notes</th></tr></thead><tbody>
           <tr><td>Cancellation</td><td>Before departure</td><td><b>SAR 150</b></td><td>Child/infant discounts; waived for bereavement</td></tr>
           <tr><td>Cancellation</td><td>After departure / no-show</td><td><b>Non-refundable</b></td><td>Unused taxes refundable</td></tr>
@@ -159,7 +159,7 @@ Seat selection available for a fee. See https://airline.example/seats
 Standard seat selection: chargeable
 Earn 50% award miles
 Fare family: ECOLITE</div></div>
-      <div class="panel"><h3>Amenities from Amadeus Fare Rules &amp; Amenities AI Switch <span class="tag tag-good">clean</span></h3>
+      <div class="panel"><h3>Amenities from Amadeus NDC Fare Rules &amp; Amenities AI Switch <span class="tag tag-good">clean</span></h3>
         <div class="cards">
           <div class="acard"><b>Cabin baggage · included</b>1 cabin bag up to 7 kg<br/><small>max 56x45x25 cm</small></div>
           <div class="acard"><b>Baggage · included</b>1 checked bag up to 23 kg</div>
@@ -173,7 +173,7 @@ Fare family: ECOLITE</div></div>
   </div></section>
 
   <section id="how"><div class="wrap">
-    <p class="eyebrow">How it works</p>
+    <p class="badge">How it works</p>
     <h2>Four calls from an Amadeus NDC response to a happy traveller.</h2>
     <p class="sub">Each endpoint takes the text exactly as Amadeus returned it and gives back something a person can read. Identical inputs are served from cache, so repeated content never reaches the model twice.</p>
     <div class="steps">
@@ -185,7 +185,7 @@ Fare family: ECOLITE</div></div>
   </div></section>
 
   <section id="features"><div class="wrap">
-    <p class="eyebrow">Everything included</p>
+    <p class="badge">Everything included</p>
     <h2>Production-grade from the first <code>docker compose up</code>.</h2>
     <div class="features">
       <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 10h16M10 4v16"/></svg></div><h3>Fare rules summary</h3><p>Cancellation, change, refund and no-show conditions as a clean table or mobile sections. Uppercase ATPCO text decoded, amounts and time windows kept exact.</p></div>
@@ -204,15 +204,15 @@ Fare family: ECOLITE</div></div>
   </div></section>
 
   <section><div class="wrap">
-    <p class="eyebrow">In the box</p>
+    <p class="badge">In the box</p>
     <h2>See it running.</h2>
     <div class="gallery">
-      <figure><img src="screenshots/13-fare-names.png" alt="Amadeus Fare Rules &amp; Amenities AI Switch fare-family codes converted to friendly labels" loading="lazy" /><figcaption>Fare-family codes to friendly labels</figcaption></figure>
-      <figure><img src="screenshots/06-playground-chat.png" alt="Amadeus Fare Rules &amp; Amenities AI Switch chat over a two-segment itinerary" loading="lazy" /><figcaption>Segment-aware chat with streaming answers</figcaption></figure>
-      <figure><img src="screenshots/02-overview.png" alt="Amadeus Fare Rules &amp; Amenities AI Switch overview dashboard" loading="lazy" /><figcaption>Overview: usage, provider health, live datastore checks</figcaption></figure>
-      <figure><img src="screenshots/03-llm-provider.png" alt="Amadeus Fare Rules &amp; Amenities AI Switch LLM provider picker" loading="lazy" /><figcaption>Pick a provider, test it, save</figcaption></figure>
-      <figure><img src="screenshots/09-prompts.png" alt="Amadeus Fare Rules &amp; Amenities AI Switch prompt editor" loading="lazy" /><figcaption>Edit prompts with validation and live preview</figcaption></figure>
-      <figure><img src="screenshots/07-usage.png" alt="Amadeus Fare Rules &amp; Amenities AI Switch usage analytics" loading="lazy" /><figcaption>Usage: tokens, latency and cache hit rate</figcaption></figure>
+      <figure><img src="screenshots/13-fare-names.png" alt="Amadeus NDC Fare Rules &amp; Amenities AI Switch fare-family codes converted to friendly labels" loading="lazy" /><figcaption>Fare-family codes to friendly labels</figcaption></figure>
+      <figure><img src="screenshots/06-playground-chat.png" alt="Amadeus NDC Fare Rules &amp; Amenities AI Switch chat over a two-segment itinerary" loading="lazy" /><figcaption>Segment-aware chat with streaming answers</figcaption></figure>
+      <figure><img src="screenshots/02-overview.png" alt="Amadeus NDC Fare Rules &amp; Amenities AI Switch overview dashboard" loading="lazy" /><figcaption>Overview: usage, provider health, live datastore checks</figcaption></figure>
+      <figure><img src="screenshots/03-llm-provider.png" alt="Amadeus NDC Fare Rules &amp; Amenities AI Switch LLM provider picker" loading="lazy" /><figcaption>Pick a provider, test it, save</figcaption></figure>
+      <figure><img src="screenshots/09-prompts.png" alt="Amadeus NDC Fare Rules &amp; Amenities AI Switch prompt editor" loading="lazy" /><figcaption>Edit prompts with validation and live preview</figcaption></figure>
+      <figure><img src="screenshots/07-usage.png" alt="Amadeus NDC Fare Rules &amp; Amenities AI Switch usage analytics" loading="lazy" /><figcaption>Usage: tokens, latency and cache hit rate</figcaption></figure>
     </div>
     <div class="stats">
       <div class="stat"><b>4</b><span>API endpoints</span></div>
@@ -224,7 +224,7 @@ Fare family: ECOLITE</div></div>
   </div></section>
 
   <section><div class="wrap">
-    <p class="eyebrow">Built for</p>
+    <p class="badge">Built for</p>
     <h2>Anyone showing Amadeus NDC content to a human.</h2>
     <div class="aud"><span>Amadeus NDC integrators</span><span>Online travel agencies</span><span>Airlines on Amadeus</span><span>Travel management companies</span><span>Booking-engine vendors</span><span>Metasearch</span></div>
     <div class="banner">
